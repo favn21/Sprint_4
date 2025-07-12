@@ -28,7 +28,9 @@ public class RentPage {
 
     private final By commentInput = By.xpath("//input[@placeholder='Комментарий для курьера']");
 
-
+    private final By orderButtonFooter = By.xpath("//button[text()='Заказать' and contains(@class,'Button_Middle__1CSJM')]");
+    private final By confirmButton = By.xpath("//button[text()='Да']");
+    private final By confirmationModal = By.xpath("//div[contains(text(), 'Заказ оформлен')]");
     public void setDeliveryDate(String date) {
         WebElement dateField = wait.until(ExpectedConditions.elementToBeClickable(dateInput));
         dateField.click();
@@ -51,9 +53,15 @@ public class RentPage {
         driver.findElement(commentInput).sendKeys(comment);
     }
 
-
     public void clickOrderButtonFooter() {
-        driver.findElement(By.xpath("//button[text()='Заказать' and contains(@class,'Button_Middle__1CSJM')]")).click();;
+        wait.until(ExpectedConditions.elementToBeClickable(orderButtonFooter)).click();
     }
 
+    public void confirmOrder() {
+        wait.until(ExpectedConditions.elementToBeClickable(confirmButton)).click();
+    }
+
+    public boolean isOrderConfirmed() {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(confirmationModal)).isDisplayed();
+    }
 }
