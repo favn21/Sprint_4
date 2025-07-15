@@ -18,6 +18,7 @@ public class MainPage {
     private final By faqSection = By.className("Home_FAQ__3uVm4");
     private final By questionsLocator = By.className("accordion__button");
     public static final String BASE_URL = "https://qa-scooter.praktikum-services.ru/";
+    private final By orderButtonFooter = By.xpath("(//button[text()='Заказать'])[2]");
 
     public MainPage(WebDriver driver) {
         this.driver = driver;
@@ -37,9 +38,7 @@ public class MainPage {
         return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(questionsLocator));
     }
 
-    public int getQuestionsCount() {
-        return getQuestions().size();
-    }
+
 
     public void clickQuestion(int index) {
         WebElement question = getQuestions().get(index);
@@ -51,5 +50,15 @@ public class MainPage {
         By answerLocator = By.id("accordion__panel-" + index);
         WebElement answer = wait.until(ExpectedConditions.visibilityOfElementLocated(answerLocator));
         return answer.getText().trim();
+    }
+
+    public void scrollToOrderButtonFooter() {
+        WebElement orderButton = driver.findElement(orderButtonFooter);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", orderButton);
+    }
+
+    public void clickOrderButtonFooter() {
+        WebElement orderButton = wait.until(ExpectedConditions.elementToBeClickable(orderButtonFooter));
+        orderButton.click();
     }
 }

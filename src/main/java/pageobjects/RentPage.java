@@ -64,4 +64,11 @@ public class RentPage {
     public boolean isOrderConfirmed() {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(confirmationModal)).isDisplayed();
     }
+    public void fillRentPage() {
+        setDeliveryDate("17.07.2025");
+        selectRentPeriod("сутки");
+        selectColor("чёрный жемчуг");
+        enterComment("Позвоните за 5 минут");
+    }
+
 }

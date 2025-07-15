@@ -49,10 +49,27 @@ public class OrderFlowTest extends BaseTest{
         orderPage.clickNextButton();
 
         RentPage rentPage = new RentPage(driver);
-        rentPage.setDeliveryDate("17.07.2025");
-        rentPage.selectRentPeriod("сутки");
-        rentPage.selectColor("чёрный жемчуг");
-        rentPage.enterComment("Позвоните за 5 минут");
+        rentPage.fillRentPage();
+        rentPage.clickOrderButtonFooter();
+
+        rentPage.confirmOrder();
+
+        Assert.assertTrue("Модальное окно с подтверждением заказа не отображается",
+                rentPage.isOrderConfirmed());
+    }
+    @Test
+    public void testCreateOrderViaFooterButton() {
+        MainPage mainPage = new MainPage(driver);
+        mainPage.scrollToOrderButtonFooter();
+
+        mainPage.clickOrderButtonFooter();
+
+        OrderPage orderPage = new OrderPage(driver);
+        orderPage.fillOrderForm(name, lastName, address, phone);
+        orderPage.clickNextButton();
+
+        RentPage rentPage = new RentPage(driver);
+        rentPage.fillRentPage();
         rentPage.clickOrderButtonFooter();
 
         rentPage.confirmOrder();
